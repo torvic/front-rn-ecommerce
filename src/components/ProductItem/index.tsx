@@ -1,5 +1,6 @@
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, Pressable} from 'react-native';
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
 import styles from './styles';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -17,8 +18,13 @@ interface ProductItemProps {
 }
 
 const ProductItem = ({item}: ProductItemProps) => {
+  const navigation = useNavigation();
+
+  const onPress = () => {
+    navigation.navigate('ProductDetails', {id: item.id});
+  };
   return (
-    <View style={styles.root}>
+    <Pressable style={styles.root} onPress={onPress}>
       <Image
         style={styles.image}
         source={{
@@ -49,7 +55,7 @@ const ProductItem = ({item}: ProductItemProps) => {
           )}
         </Text>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
