@@ -7,7 +7,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 interface ProductItemProps {
   item: {
-    id: string;
+    _id: string;
     title: string;
     image: string;
     avgRating: number;
@@ -21,7 +21,7 @@ const ProductItem = ({item}: ProductItemProps) => {
   const navigation = useNavigation();
 
   const onPress = () => {
-    navigation.navigate('ProductDetails', {id: item.id});
+    navigation.navigate('ProductDetails', {id: item._id});
   };
   return (
     <Pressable style={styles.root} onPress={onPress}>
