@@ -42,6 +42,7 @@ const ImageCarousel = ({images}: {images: string[]}) => {
       <View style={styles.dots}>
         {images.map((image, index) => (
           <View
+            key={index}
             style={[
               styles.dot,
               {
