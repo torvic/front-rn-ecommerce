@@ -9,13 +9,47 @@ import {
   Platform,
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
+import {useNavigation} from '@react-navigation/native';
+import {gql, useMutation} from '@apollo/client';
 import countryList from 'country-list';
 import Button from '../../components/Button';
 import styles from './styles';
 
+const ADD_ADDRESS = gql`
+  mutation AddNewAddress($input: AddressInput!) {
+    addNewAddress(input: $input) {
+      _id
+      country
+      fullName
+      phoneNumber
+      address
+      city
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+const UPDATE_ORDER = gql`
+  mutation UpdateOrder($input: UpdateOrderInput!) {
+    updateOrder(input: $input) {
+      _id
+      address
+      complete
+      transactionId
+      user
+    }
+  }
+`;
+
 const countries = countryList.getData();
 
 const AddressScreen = () => {
+  const navigation = useNavigation();
+  const [addNewAddress] = useMutation(ADD_ADDRESS);
+  const [updateOrder] = useMutation(UPDATE_ORDER, {
+    refetchQueries: ['GetAllOrderItemNotComplete'],
+  });
   const [country, setCountry] = useState(countries[0].code);
   const [fullname, setFullname] = useState('');
   const [phone, setPhone] = useState('');
@@ -43,7 +77,30 @@ const AddressScreen = () => {
       return;
     }
 
-    console.warn('Success. CHeckout');
+    addNewAddress({
+      variables: {
+        input: {
+          country,
+          fullName: fullname,
+          phoneNumber: phone,
+          address,
+          city,
+        },
+      },
+      onCompleted: () => {
+        updateOrder({
+          variables: {
+            input: {
+              complete: true,
+            },
+          },
+          onCompleted: () => {
+            navigation.navigate('HomeScreen');
+            console.warn('Success. CHeckout');
+          },
+        });
+      },
+    });
   };
 
   const validateAddress = () => {
@@ -59,8 +116,12 @@ const AddressScreen = () => {
       <ScrollView style={styles.root}>
         <View style={styles.row}>
           <Picker selectedValue={country} onValueChange={setCountry}>
-            {countries.map(country => (
-              <Picker.Item value={country.code} label={country.name} />
+            {countries.map((country, index) => (
+              <Picker.Item
+                value={country.code}
+                label={country.name}
+                key={index}
+              />
             ))}
           </Picker>
         </View>

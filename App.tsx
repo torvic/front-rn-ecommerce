@@ -34,7 +34,7 @@ const authLink = setContext((_, {headers}) => {
       ...headers,
       // authorization: token ? `Bearer ${token}` : '',
       authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMTdjYTU3Yjk1MGI2ZmRlN2JkNzlkNSIsImlhdCI6MTY0NjE0NzI3MiwiZXhwIjoxNjQ2MjMzNjcyfQ.pdkTA_xG2gCHIZdBuxT4V2dLKunle2ON37w4ScAPphc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMTdjYTU3Yjk1MGI2ZmRlN2JkNzlkNSIsImlhdCI6MTY0NjE2Nzc2NSwiZXhwIjoxNjQ2MjU0MTY1fQ.AjpkpMyCGhVQm4avqrVq89nmuphOBpLIh6cJJArue20',
     },
   };
 });
