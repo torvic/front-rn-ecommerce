@@ -8,6 +8,7 @@
  * @format
  */
 import 'react-native-gesture-handler';
+import 'cross-fetch/polyfill';
 import React from 'react';
 import {View, StatusBar, useColorScheme} from 'react-native';
 import {
